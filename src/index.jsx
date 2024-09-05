@@ -1,8 +1,8 @@
-import { render } from 'preact';
-import './style.css';
+import { render } from "preact";
+import "./style.css";
 
 export function App() {
-	return null;
+  return null;
 }
 
-render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById("app"));

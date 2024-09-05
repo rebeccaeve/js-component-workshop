@@ -5,9 +5,13 @@ export function Duration({ elapsedSeconds }) {
   const hours = Math.floor(elapsedSeconds / 3600);
   const minutes = Math.floor((elapsedSeconds % 3600) / 60);
   const seconds = elapsedSeconds % 60;
-  return [hours, minutes, seconds]
-    .map((number) => number.toString().padStart(2, "0"))
-    .join(":");
+  return (
+    <time datetime={`${hours}h ${minutes}m ${seconds}s`}>
+      {[hours, minutes, seconds]
+        .map((number) => number.toString().padStart(2, "0"))
+        .join(":")}
+    </time>
+  );
 }
 
 render(<Duration elapsedSeconds={330} />, document.getElementById("app"));

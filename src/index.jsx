@@ -14,4 +14,9 @@ export function Duration({ elapsedSeconds }) {
   );
 }
 
-render(<Duration elapsedSeconds={330} />, document.getElementById("app"));
+export function Stopwatch() {
+  const elapsedSeconds = 330;
+  return <Duration elapsedSeconds={elapsedSeconds} />;
+}
+
+render(<Stopwatch />, document.getElementById("app"));

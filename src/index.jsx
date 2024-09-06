@@ -17,18 +17,49 @@ export function Duration({ elapsedSeconds }) {
 
 export function Stopwatch() {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [timeoutId, setTimeoutId] = useState(null);
 
   const advanceStopwatch = () => {
     const newTimeoutId = setTimeout(
       () => setElapsedSeconds(elapsedSeconds + 1),
       1000
     );
+    setTimeoutId(newTimeoutId);
     return () => clearTimeout(newTimeoutId);
   };
 
-  useEffect(advanceStopwatch, [elapsedSeconds]);
+  const stopStopwatch = () => {
+    clearTimeout(timeoutId);
+    setTimeoutId(null);
+  };
 
-  return <Duration elapsedSeconds={elapsedSeconds} />;
+  const toggleStopwatch = () =>
+    timeoutId === null ? advanceStopwatch() : stopStopwatch();
+
+  const resetStopwatch = () => setElapsedSeconds(0);
+
+  useEffect(() => {
+    if (elapsedSeconds > 0) advanceStopwatch();
+  }, [elapsedSeconds]);
+
+  const startButtonText = timeoutId === null ? "Start" : "Stop";
+
+  return (
+    <>
+      <Duration elapsedSeconds={elapsedSeconds}></Duration>
+      <div>
+        <button class={startButtonText.toLowerCase()} onClick={toggleStopwatch}>
+          {startButtonText}
+        </button>
+        <button
+          disabled={timeoutId !== null || elapsedSeconds == 0}
+          onClick={resetStopwatch}
+        >
+          Reset
+        </button>
+      </div>
+    </>
+  );
 }
 
 render(<Stopwatch />, document.getElementById("app"));

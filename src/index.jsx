@@ -1,5 +1,5 @@
 import { render } from "preact";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import "./style.css";
 
 export function Duration({ elapsedSeconds }) {
@@ -17,6 +17,17 @@ export function Duration({ elapsedSeconds }) {
 
 export function Stopwatch() {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  const advanceStopwatch = () => {
+    const newTimeoutId = setTimeout(
+      () => setElapsedSeconds(elapsedSeconds + 1),
+      1000
+    );
+    return () => clearTimeout(newTimeoutId);
+  };
+
+  useEffect(advanceStopwatch, [elapsedSeconds]);
+
   return <Duration elapsedSeconds={elapsedSeconds} />;
 }
 

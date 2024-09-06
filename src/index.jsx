@@ -1,4 +1,5 @@
 import { render } from "preact";
+import { useState } from "preact/hooks";
 import "./style.css";
 
 export function Duration({ elapsedSeconds }) {
@@ -15,7 +16,7 @@ export function Duration({ elapsedSeconds }) {
 }
 
 export function Stopwatch() {
-  const elapsedSeconds = 330;
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
   return <Duration elapsedSeconds={elapsedSeconds} />;
 }
 
